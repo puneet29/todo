@@ -16,6 +16,7 @@ app.on('ready', () => {
         }
     });
     mainWindow.loadURL(`file://${__dirname}/main.html`); // load main HTML window
+    mainWindow.on('closed', () => app.quit()); // closes any other window when the main window is closed
 
     // Adding menu to the app
     const mainMenu = Menu.buildFromTemplate(menuTemplate);
@@ -32,6 +33,7 @@ function createAddWindow() {
             nodeIntegration: true
         }
     });
+    addWindow.loadURL(`file://${__dirname}/addtodo.html`);
 }
 
 // Template used to make menu
@@ -41,7 +43,7 @@ const menuTemplate = [
         submenu: [
             {
                 label: 'New Todo',
-                click() {createAddWindow();}
+                click() { createAddWindow(); }
             },
             {
                 label: 'Quit',
@@ -59,6 +61,26 @@ const menuTemplate = [
 ];
 
 // If the platform is Mac(darwin) add different menu template to handle the first menu name
-if (process.platform == 'darwin') {
+if (process.platform === 'darwin') {
     menuTemplate.unshift({}); // unshift: Adds the arg to start of the template
+}
+
+// Don't show developer tools in production env only
+if(process.env.NODE_ENV !== 'production'){
+    menuTemplate.push({
+        label: 'Developer',
+        submenu: [
+            {
+                label: 'Toggle Developer Tools',
+
+                // hotkey association
+                accelerator: process.platform === 'darwin' ? 'Command+Alt+I' : 'Ctrl+Shift+I',
+
+                // event handling for label
+                click(item, focusedWindow) {
+                    focusedWindow.toggleDevTools();
+                }
+            }
+        ]
+    });
 }
