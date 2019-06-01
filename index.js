@@ -26,9 +26,20 @@ const menuTemplate = [
     {
         label: 'File',
         submenu: [
+            {label: 'New Todo'},
             {
-                label: 'New Todo'
+                label: 'Quit',
+                
+                // triggers on clicking quit
+                click() {
+                    app.quit();
+                }
             }
         ]
     }
-]
+];
+
+// If the platform is Mac(darwin) add different menu template to handle the first menu name
+if(process.platform == 'darwin'){
+    menuTemplate.unshift({}); // unshift: Adds the arg to start of the template
+}
