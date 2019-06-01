@@ -8,6 +8,7 @@ A basic To-Do app made using Electron.js for basic understanding of how menu bar
 
 - Menu Bar which contains a file menu. File menu contains:
   - **Add a to-do menu item:** Clicking on this item pops up new window which contains a text field and a button for adding to-do task.
+  - **Clear to-do menu item:** Clears the existing todo list.
   - **Quit menu item:** Exits from the app.
 
 ## Getting Started
