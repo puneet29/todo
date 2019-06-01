@@ -1,6 +1,6 @@
 # To-Do App
 
-A basic To-Do app made using Electron.js for basic understanding of how menu bars work in Electron. It also handles the cross platform nature of the application. Along with that it implements the features based on the evironment(production, development, test, etc). To go through the code at each step, check out the commits in sequential order to understand how to make similar project.
+A basic To-Do app made using Electron.js for basic understanding of how menu bars work in Electron. It also handles the cross platform nature of the application. Along with that it implements the features based on the environment(production, development, test, etc). To go through the code at each step, check out the commits in sequential order to understand how to make similar project.
 
 ## Basic blueprint of the app
 
