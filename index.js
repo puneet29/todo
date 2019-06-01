@@ -49,6 +49,12 @@ const menuTemplate = [
                 click() { createAddWindow(); }
             },
             {
+                label: 'Clear Todo list',
+                click() {
+                    mainWindow.webContents.send('clearTodo');
+                }
+            },
+            {
                 label: 'Quit',
 
                 // Associating shortcut key to Quit using ternery expression, can use immediately invoked function or string too

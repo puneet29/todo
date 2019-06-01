@@ -10,15 +10,22 @@
 
     <script>
         const electron = require('electron');
-
         const { ipcRenderer } = electron;
 
+        const ul = document.querySelector('ul');
+
+        // Show todo list
         ipcRenderer.on('showTodo', (event, todoname) => {
             const li = document.createElement('li');
             const text = document.createTextNode(todoname);
 
             li.appendChild(text);
-            document.querySelector('ul').appendChild(li);
+            ul.appendChild(li);
+        });
+
+        // Clear todo list
+        ipcRenderer.on('clearTodo', (event) => {
+            ul.innerHTML = '';
         });
     </script>
 </body>
