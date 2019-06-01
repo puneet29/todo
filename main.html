@@ -1,8 +1,26 @@
 <html>
+
 <head>
     <title>To Do App</title>
 </head>
+
 <body>
-    <h1>My ToDos</h1>
+    <h1>My To Do:</h1>
+    <ul></ul>
+
+    <script>
+        const electron = require('electron');
+
+        const { ipcRenderer } = electron;
+
+        ipcRenderer.on('showTodo', (event, todoname) => {
+            const li = document.createElement('li');
+            const text = document.createTextNode(todoname);
+
+            li.appendChild(text);
+            document.querySelector('ul').appendChild(li);
+        });
+    </script>
 </body>
+
 </html>

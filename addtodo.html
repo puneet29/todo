@@ -4,17 +4,25 @@
 </head>
 
 <body>
-    <div>
-        <label>Enter your todo: </label>
-        <input type="text" autofocus>
-    </div>
-    <button type="submit">Add</button>
-
+    <form action="submit">
+        <div>
+            <label>Enter your todo: </label>
+            <input type="text" autofocus>
+        </div>
+        <button type="submit">Add</button>
+    </form>
     <script>
-        document.querySelector('form').addEventListener('submit', (event) => {
-            event.preventDefault();
+        const electron = require('electron');
 
-            debugger;
+        const { ipcRenderer } = electron;
+
+        document.querySelector('form').addEventListener('submit', (event) => {
+            event.preventDefault(); // cancel default event
+
+            // Retrieve and send the todo to electron app
+            const todoname = document.querySelector('input').value;
+            ipcRenderer.send('addTodo', todoname);
+
         });
     </script>
 </body>

@@ -2,7 +2,7 @@
 const electron = require('electron');
 
 // Getting the properties from dependencies using destructuring
-const { app, BrowserWindow, Menu } = electron;
+const { app, BrowserWindow, Menu, ipcMain } = electron;
 
 // Defining main window and additional window
 let mainWindow;
@@ -34,6 +34,9 @@ function createAddWindow() {
         }
     });
     addWindow.loadURL(`file://${__dirname}/addtodo.html`);
+
+    // For garbage collection. Alternative: Each time we close window refer addWindow = null
+    addWindow.on('closed', () => addWindow = null);
 }
 
 // Template used to make menu
@@ -66,10 +69,14 @@ if (process.platform === 'darwin') {
 }
 
 // Don't show developer tools in production env only
-if(process.env.NODE_ENV !== 'production'){
+if (process.env.NODE_ENV !== 'production') {
     menuTemplate.push({
         label: 'Developer',
         submenu: [
+            // Reload option. Electron pre-built menus using role property. 
+            { role: 'reload' },
+
+            // Developer tools option.
             {
                 label: 'Toggle Developer Tools',
 
@@ -84,3 +91,13 @@ if(process.env.NODE_ENV !== 'production'){
         ]
     });
 }
+
+// Get the name of todo from renderer
+ipcMain.on('addTodo', (event, todoname) => {
+
+    //Send the todo to mainWindow
+    mainWindow.webContents.send('showTodo', todoname);
+
+    // Close window when todo is added
+    addWindow.close();
+});
